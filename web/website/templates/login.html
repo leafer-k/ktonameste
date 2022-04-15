@@ -1,0 +1,41 @@
+{%extends "base.html"%}
+{% block title %}Вход{% endblock %}
+
+{% block content %}
+<p align="center" class="lead" style="font-size: 36px; margin-top: 25px">Вход</p>
+
+<div class="container" style="background-color: aliceblue;
+padding: 25px 50px; border-radius: 20px">
+<form method="post" autocomplete="on">
+    <div class="form-group">
+      <label for="email">Email-адрес или номер телефона</label>
+      <input
+        type="text"
+        class="form-control"
+        id="emailPhone"
+        name="emailPhone"
+        placeholder="Почта / номер телефона"
+        required="True"
+      />
+    </div>
+  
+    <div class="form-group">
+      <label for="password">Пароль</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        name="password"
+        placeholder="Введите пароль"
+        required="True"
+      />
+    </div>
+  
+    <br />
+    <div style="margin: 0 auto; width:100px; height:auto;">
+    <button type="submit" class="btn btn-primary" style="font-size: 20px; clear: both; display: table; margin: 0 auto">Войти</button>
+    <a href="https://leafer.pythonanywhere.com/sign-up" style="margin: 0 auto; clear: both; display: table; margin-top: 10px;">Регистрация</a>  
+  </div>
+  </form>
+</div>
+{% endblock %}

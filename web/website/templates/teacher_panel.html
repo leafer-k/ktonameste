@@ -1,0 +1,218 @@
+{%extends "base.html"%}
+{% block title %}Для учителя{% endblock %}
+
+{% block content %}
+
+<style>
+  .table-title{
+    transition: 0.2s;
+  }
+  .table-title:hover{
+    background-color: rgb(207, 207, 207);
+    transition: 0.2s;
+  }
+</style>
+
+<p align="center" class="lead" style="font-size: 36px; margin-top: 25px">Для учителя</p>
+
+
+<div id="left-block" style="float: left; margin-right: 20px; width: 100%; margin-top: 20px;">
+  <form method="post" width="100%">
+      <h3 align="center">Добавить запись о посещении</h3>
+      <div class="form-group">
+        <label for="studentCode">Код ученика</label>
+        <input
+          type="text"
+          class="form-control"
+          id="studentCode"
+          name="studentCode"
+          placeholder="Код ученика"
+          required="True"
+        />
+      </div>
+
+      <div class="form-group">
+        <input type="time"
+          class="form-control"
+          name="time"
+          id="time"
+          required="True"
+          value="08:00"
+        >
+      </div>
+
+      <div class="form-group">
+          <input
+              type="text"
+              class="form-control"
+              value="addAttend"
+              name="role"
+              id="role"
+              hidden="true"
+          />
+      </div>
+
+      <button type="submit" class="btn btn-primary">Готово</button>
+    </form>
+
+
+<br \>
+
+{% if user.user_type == 'admin' %}
+<p style="text-align: center; font-size: 22px;">Все ученики</p>
+
+
+<form method="post">
+  <input type="submit" name="download_codes" class="btn btn-link" value="Скачать QR-коды">
+</form>
+
+
+  <table class="table table-hover" style="max-width: 100%;">
+    <thead>
+        <tr>
+            <th>Код школы</th>
+            <th>Имя</th>
+            <th>Класс</th>
+            <th>Код</th>
+        </tr>
+    </thead>
+    <tbody>
+      {% for class1 in classes %}
+    <tr style="background-color: #e7f3ff;">
+      <td colspan="4" data-toggle="collapse" data-target="#students{{class1}}"  class="table clickable table-title" style="text-align: center;" aria-expanded="false" aria-controls="students{{class1}}"><b>{{class1}}</b></td>
+    </tr>
+    <tbody id="students{{class1}}" class="collapse">
+      {% for student in students %}
+      {% if student.student_grade|string+student.student_class == class1 %}
+    <tr class="table" class="student">
+      <td>{{ student.school_code }}</td>
+      <td>{{ student.name }} {{ student.surname }}</td>
+      <td>{{ student.student_grade }}{{ student.student_class }}</td>
+      <td>{{ student.code }}</td>
+        </tr>
+      {% endif %}
+      {% endfor %}
+    </tbody>
+      {% endfor %}
+    </tbody>
+    </table>
+
+
+{% elif user.user_type == 'teacher' or user.user_type == 'moderator' %}
+
+
+<form method="post">
+  <input type="submit" name="download_codes" class="btn btn-link" value="Скачать QR-коды">
+</form>
+
+
+<p style="text-align: center; font-size: 22px;">{{ school.school_name }}</p>
+
+<table class="table table-hover" style="max-width: 100%;">
+  <thead>
+      <tr>
+          <th>Имя</th>
+          <th>Класс</th>
+          <th>Код</th>
+      </tr>
+  </thead>
+  <tbody>
+    {% for class1 in classes %}
+  <tr style="background-color: #e7f3ff;">
+    <td colspan="4" data-toggle="collapse" data-target="#students{{class1}}"  class="table clickable table-title" style="text-align: center;"><b>{{class1}}</b></td>
+  </tr>
+  <tbody id="students{{class1}}">
+    {% for student in students %}
+    {% if student.student_grade|string+student.student_class == class1 %}
+  <tr class="table" class="student">
+    <td>{{ student.name }} {{ student.surname }}</td>
+    <td>{{ student.student_grade }}{{ student.student_class }}</td>
+    <td>{{ student.code }}</td>
+      </tr>
+    {% endif %}
+    {% endfor %}
+  </tbody>
+    {% endfor %}
+  </tbody>
+  </table>
+
+{% endif %}
+
+<br \>
+
+<form method="post">
+    <h3 align="center">Добавить ученика (для модератора)</h3>
+    <div class="form-group">
+      <label for="newStudentCode">Код ученика</label>
+      <input
+        type="text"
+        class="form-control"
+        id="newStudentCode"
+        name="newStudentCode"
+        placeholder="Код"
+        required="True"
+      />
+    </div>
+
+    <div class="form-group">
+        <label for="newStudentName">Имя</label>
+        <input
+          type="text"
+          class="form-control"
+          id="newStudentName"
+          name="newStudentName"
+          placeholder="Имя"
+          required="True"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="newStudentSurname">Фамилия</label>
+        <input
+          type="text"
+          class="form-control"
+          id="newStudentSurname"
+          name="newStudentSurname"
+          placeholder="Фамилия"
+          required="True"
+        />
+      </div>
+
+      <div class="form-group">
+        <input
+            type="text"
+            class="form-control"
+            value="add"
+            name="role"
+            id="role"
+            hidden="true"
+        />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Готово</button>
+  </form>
+
+
+  <form method="post"  enctype="multipart/form-data">
+    <h3 align="center">Добавить учеников (Excel)</h3>
+    <div class="form-group">
+      
+      <div class="form-group">
+        <input type="file" name="file">
+      </div>
+
+      <div class="form-group">
+        <input
+            type="text"
+            class="form-control"
+            value="excel-import"
+            name="role"
+            id="role"
+            hidden="true"
+        />
+    </div>
+    <button type="submit" class="btn btn-primary">Готово</button>
+  </form>
+
+
+{% endblock %}

@@ -1,0 +1,20 @@
+{%extends "base.html"%}
+{% block title %}Статистика{% endblock %}
+
+{% block content %}
+<p align="center" class="lead" style="font-size: 36px; margin-top: 25px">Статистика</p>
+
+{% for userStudent in user.student_id %}
+<h4>{{userStudent.name}} {{userStudent.surname}}</h4>
+<ul class="list-group">
+    {% for attendance1 in userStudent.student_attendance %}
+    {% if attendance1.time[:2]|int >= 8 %}
+        <li class="list-group-item" style="background-color:rgb(255, 240, 240);">{{attendance1.date}} {{attendance1.time}}</li>
+    {% else %}
+        <li class="list-group-item">{{attendance1.date}} {{attendance1.time}}</li>
+    {% endif %}    
+{% endfor %}
+</ul>
+<br>
+{% endfor %}
+{% endblock %}

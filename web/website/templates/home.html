@@ -1,0 +1,65 @@
+ {%extends "base.html"%}
+ {% block title %}Главная{% endblock %}
+
+ {% block content %}
+ <p align="center" class="lead" style="font-size: 44px; margin-top: 25px">Кто на месте?</p>
+ 
+ <div class="container">
+    <div style="width:fit-content; height:auto; margin: 0 auto; margin-top:50px">
+        <img src="static/logo.png" width="260px" height="273px">
+    </div>
+    
+    {%if user.is_authenticated %}
+    <div class="card" style="margin: 0 auto; margin-top: -30px; border-radius: 15px; width: 70%">
+        <div class="card-body">
+          <h4 class="card-title">Добро пожаловать!</h4>
+          <p class="card-text" style="font-size: 20px;">
+            "Кто на месте?" - это система, позволяющая родителям не беспокоиться о том, пришёл ли их ребёнок в школу.
+            Она также помогает учителям вести статистику и журнал посещаемости. Теперь вы можете перейти в
+            личный кабинет или во вкладку "Статистика".
+          </p>
+        </div>
+      </div>
+      <div style="width: fit-content; margin: 0 auto; margin-top:15px;">
+          <a href="https://leafer.pythonanywhere.com/profile" class="btn btn-primary" style="width:200px; height:50px; border-radius: 10px; text-align:center; font-size:20px;">Личный кабинет</a>
+      </div>
+    {% else %}
+    
+    <div class="card" style="margin: 0 auto; margin-top: -30px; border-radius: 15px; width: 70%">
+        <div class="card-body">
+          <h4 class="card-title">Добро пожаловать!</h4>
+          <p class="card-text">
+            Для того, чтобы получить доступ ко всем функциям сайта, нужно зарегистрироваться или войти в уже существующий аккаунт.
+            Для регистрации нужно ввести адрес электронной почты, имя, номер телефона, и придумать пароль. Код учителя нужно вводить,
+            только если Вы регистрируетесь как учитель или модератор.
+          </p>
+        </div>
+      </div>
+      <div style="width: fit-content; margin: 0 auto; margin-top:15px;">
+          <a href="https://leafer.pythonanywhere.com/login" class="btn btn-primary" style="width:100px; height:50px; border-radius: 10px; text-align:center; font-size:20px;">Вход</a>
+          <a href="https://leafer.pythonanywhere.com/sign-up" class="btn btn-primary" style="margin-left:20px; width:150px; height:50px; border-radius: 10px; text-align:center; font-size:20px;">Регистрация</a>
+      </div>
+      {% endif %}
+      <br>
+      <hr>
+      <div style="width: fit-content; margin: 0 auto;">
+        <dl class="dl-horizontal" style="margin: 0 auto; width:100%;">
+            <dt class="col-sm-3" style="margin: 0 auto; width:fit-content;">Что дальше?</dt>
+            <dd class="col-sm-9" style="margin: 0 auto; width:100%;">После входа, на странице своего профиля Вы сможете привязать к аккаунту
+                своего ребенка (или нескольких детей). Потребуется ввести код школы и личный код ребенка,
+                их можно получить в школе.</dd>
+                <br>
+            <dt class="col-sm-3" style="margin: 0 auto; width:fit-content;">Как воспользоваться?</dt>
+            <dd class="col-sm-9" style="margin: 0 auto; width:100%;">В профиле (в меню отображается вашем именем) можно подключить и отключить рассылку уведомлений от телеграм-бота. Когда ребенок будет приходить в школу, Вы сразу же будете получать сообщения об этом от нашего бота. Нажмите кнопку «Привязать Telegram», Вы получите свой код, останется только написать боту @ktonamestebot: «Привязать *ваш код*». Если всё было сделано правильно, бот сообщит Вам об успешной привязке. Обновите страницу на сайте, в профиле появится сообщение о том, что телеграм привязан. Отключить рассылку можно, нажав кнопку «отвязать».
+                На странице «Статистика» отображается информация о том, в какое время ваш ребёнок приходит в школу.</dd>
+        </dl>
+      </div>
+ </div>
+
+ <br>
+ <hr>
+ <br>
+ <br>
+
+ 
+ {% endblock %}
